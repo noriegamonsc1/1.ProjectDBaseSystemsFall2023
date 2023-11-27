@@ -1,1 +1,24 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Taxation Payer LLC</title> <!--Name of the company-->
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+        <h1>Welcome to Taxation Payer LLC</h1>
+        
+        <nav>
+            <ul>
+                <li>Add</li>
+                <li>Edit</li>
+                
+            </ul>
+        </nav>
+        
+    {% endblock %}
+</body>
+</html>
+
