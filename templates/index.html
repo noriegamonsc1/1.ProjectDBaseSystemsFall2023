@@ -12,14 +12,21 @@
 
     <!-- Form for Data Entry -->
     <form id="taxForm" action="/add-record" method="post">
-        <input type="text" name="company" placeholder="Company" required>
-        <input type="number" name="amount" placeholder="Amount" required>
-        <input type="date" name="payment_date" placeholder="Payment Date">
-        <select name="status">
+        <input type="text" id="company" name="company" placeholder="Company" required>
+        <input type="number" id="amount" name="amount" placeholder="Amount" required>
+    
+        <label for="payment_date">Payment Date:</label>
+        <input type="date" id="payment_date" name="payment_date" placeholder="Payment Date">
+    
+        <label for="status">Status:</label>
+        <select id="status" name="status">
             <option value="paid">Paid</option>
             <option value="unpaid">Unpaid</option>
         </select>
-        <input type="date" name="due_date" required>
+    
+        <label for="due_date">Due Date:</label>
+        <input type="date" id="due_date" name="due_date" required>
+    
         <button type="submit">Save</button>
     </form>
 
