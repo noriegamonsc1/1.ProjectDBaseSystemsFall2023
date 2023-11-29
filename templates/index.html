@@ -2,23 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Taxation Payer LLC</title> <!--Name of the company-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Tracking System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    {% extends 'base.html' %}
-    {% block content %}
-        <h1>Welcome to Taxation Payer LLC</h1>
-        
-        <nav>
-            <ul>
-                <li>Add</li>
-                <li>Edit</li>
-                
-            </ul>
-        </nav>
-        
-    {% endblock %}
+    <h1>Tax Payment Tracking System</h1>
+
+    <!-- Form for Data Entry -->
+    <form id="taxForm" action="/add-record" method="post">
+        <input type="text" name="company" placeholder="Company" required>
+        <input type="number" name="amount" placeholder="Amount" required>
+        <input type="date" name="payment_date" placeholder="Payment Date">
+        <select name="status">
+            <option value="paid">Paid</option>
+            <option value="unpaid">Unpaid</option>
+        </select>
+        <input type="date" name="due_date" required>
+        <button type="submit">Save</button>
+    </form>
+
+    <!-- Table to Display Records -->
+    <div id="recordsContainer">
+        <table id="recordsTable">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Amount</th>
+                    <th>Payment Date</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.company }}</td>
+                    <td>{{ record.amount }}</td>
+                    <td>{{ record.payment_date.strftime('%Y-%m-%d') if record.payment_date else 'N/A' }}</td>
+                    <td>{{ record.status }}</td>
+                    <td>{{ record.due_date.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <form action="{{ url_for('update_record', tax_id=record.tax_id) }}" method="post">
+                            <!-- Add hidden fields or a modal for updating record details -->
+                            <button type="submit">Update</button>
+                        </form>
+                        <form action="{{ url_for('delete_record', tax_id=record.tax_id) }}" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
-
