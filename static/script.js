@@ -47,6 +47,20 @@ function submitUpdate() {
     $('#updateForm').submit();
 }
 
+// Function to confirm and handle record deletion
+function confirmDelete(taxId) {
+    if (confirm("Are you sure you want to delete this record?")) {
+        // If the user confirms, submit the delete form
+        var deleteForm = document.getElementById(`deleteForm_${taxId}`);
+        if (deleteForm) {
+            deleteForm.submit();
+        }
+    } else {
+        // If the user cancels, do nothing
+        return false;
+    }
+}
+
 // Event listener for DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function () {
     // Call the function to populate the due date dropdown
