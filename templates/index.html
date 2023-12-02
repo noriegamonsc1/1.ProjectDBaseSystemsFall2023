@@ -14,19 +14,19 @@
     <form id="taxForm" action="/add-record" method="post">
         <input type="text" id="company" name="company" placeholder="Company" required>
         <input type="number" id="amount" name="amount" placeholder="Amount" required>
-    
+
         <label for="payment_date">Payment Date:</label>
         <input type="date" id="payment_date" name="payment_date" placeholder="Payment Date">
-    
+
         <label for="status">Status:</label>
         <select id="status" name="status">
             <option value="paid">Paid</option>
             <option value="unpaid">Unpaid</option>
         </select>
-    
+
         <label for="due_date">Due Date:</label>
         <input type="date" id="due_date" name="due_date" required>
-    
+
         <button type="submit">Save</button>
     </form>
 
@@ -53,9 +53,7 @@
                     <td>{{ record.due_date.strftime('%Y-%m-%d') }}</td>
                     <td>
                         <button type="button" class="btn btn-primary" onclick="showUpdateModal('{{ record.tax_id }}', '{{ record.company }}', '{{ record.amount }}', '{{ record.payment_date.strftime('%Y-%m-%d') }}', '{{ record.status }}', '{{ record.due_date.strftime('%Y-%m-%d') }}')">Update</button>
-                        <form action="{{ url_for('delete_record', tax_id=record.tax_id) }}" method="post" style="display: inline-block;">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ record.tax_id }}')">Delete</button>
                     </td>
                 </tr>
                 {% endfor %}
@@ -74,6 +72,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <!-- Update Record Form -->
                     <form id="updateForm" action="/update-record" method="post">
                         <input type="hidden" id="updateId" name="tax_id">
                         <input type="text" class="form-control mb-2" id="updateCompany" name="company" placeholder="Company" required>
