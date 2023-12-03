@@ -38,7 +38,9 @@ def index():
 def add_record():
     company = request.form.get('company')
     amount = float(request.form.get('amount'))
-    payment_date = datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d')
+    # Check if payment_date is provided
+    payment_date_str = request.form.get('payment_date')
+    payment_date = datetime.strptime(payment_date_str, '%Y-%m-%d') if payment_date_str else None
     status = request.form.get('status')
     due_date = datetime.strptime(request.form.get('due_date'), '%Y-%m-%d')
     new_record = Taxation(company=company, amount=amount, payment_date=payment_date, status=status, due_date=due_date)

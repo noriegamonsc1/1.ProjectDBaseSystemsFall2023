@@ -57,7 +57,7 @@
                     <td>{{ record.status }}</td>
                     <td>{{ record.due_date.strftime('%Y-%m-%d') }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" onclick="showUpdateModal('{{ record.tax_id }}', '{{ record.company }}', '{{ record.amount }}', '{{ record.payment_date.strftime('%Y-%m-%d') }}', '{{ record.status }}', '{{ record.due_date.strftime('%Y-%m-%d') }}')">Update</button>
+                        <button type="button" class="btn btn-primary" onclick="showUpdateModal('{{ record.tax_id }}', '{{ record.company }}', '{{ record.amount }}', '{% if record.payment_date is not none %}{{ record.payment_date.strftime('%Y-%m-%d') }}{% endif %}', '{{ record.status }}', '{{ record.due_date.strftime('%Y-%m-%d') }}')">Update</button>
                         <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ record.tax_id }}')">Delete</button>
                     </td>
                 </tr>
