@@ -1,26 +1,32 @@
 // Function to populate the due date dropdown
 function populateDueDateDropdown() {
     var dropdown = document.getElementById('dueDate');
-    var currentYear = new Date().getFullYear();
-
-    // Define the due dates
-    var dates = [
-        `April 15, ${currentYear}`,
-        `June 15, ${currentYear}`,
-        `September 15, ${currentYear}`,
-        `January 15, ${currentYear + 1}` // January of the next year
-    ];
+    var futureYears = [2024, 2025, 2026];
 
     // Clear existing options
     dropdown.innerHTML = '';
 
     // Populate dropdown with new options
-    dates.forEach(function(date) {
-        var option = document.createElement('option');
-        option.value = new Date(date).toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
-        option.textContent = date;
-        dropdown.appendChild(option);
+    futureYears.forEach(function (year) {
+        [0, 3, 5, 8].forEach(function (monthOffset) {
+            // Get the due date for January, April, June, and September
+            var dueDate = new Date(year, monthOffset, 15);
+
+            // Check if the due date is after the current date
+            if (dueDate > new Date() && dueDate.getMonth() !== 11) {
+                var option = document.createElement('option');
+                option.value = dueDate.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
+                option.textContent = getFormattedDate(dueDate);
+                dropdown.appendChild(option);
+            }
+        });
     });
+}
+
+// Function to format the date as 'MMMM DD, YYYY'
+function getFormattedDate(date) {
+    var options = { month: 'long', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
 }
 
 // Function to show the update modal with pre-filled data
