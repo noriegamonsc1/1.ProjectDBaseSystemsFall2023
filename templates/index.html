@@ -12,6 +12,7 @@
 
     <!-- Form for Data Entry -->
     <form id="taxForm" action="/add-record" method="post">
+        <h4>Add a new record:</h4>
         <input type="text" id="company" name="company" placeholder="Company" required>
         <input type="number" id="amount" name="amount" placeholder="Amount" required>
 
@@ -26,10 +27,10 @@
 
         <label for="due_date">Due Date:</label>
         <select id="dueDate" name="due_date" required>
-            <option value="2023-04-15">April 15, 2023</option>
+            <!-- <option value="2023-04-15">April 15, 2023</option>
             <option value="2023-06-15">June 15, 2023</option>
             <option value="2023-09-15">September 15, 2023</option>
-            <option value="2024-01-15">January 15, 2024</option>
+            <option value="2024-01-15">January 15, 2024</option> -->
         </select>
 
         <button type="submit">Save</button>
@@ -37,6 +38,11 @@
 
     <!-- Table to Display Records -->
     <div id="recordsContainer">
+        <h4>Summary:</h4>
+        <label>Filter by Due Date:</label>
+        <select class="form-control mb-2" id="filterDueDate" name="due_date" onchange="updateDataTable();">
+        </select>
+
         <table id="recordsTable">
             <thead>
                 <tr>
@@ -48,7 +54,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="recordsTableBody">
                 {% for record in records %}
                 <tr>
                     <td>{{ record.company }}</td>
@@ -88,10 +94,10 @@
                             <option value="unpaid">Unpaid</option>
                         </select>
                         <select class="form-control mb-2" id="updateDueDate" name="due_date" required>
-                            <option value="2023-04-15">April 15, 2023</option>
+                            <!-- <option value="2023-04-15">April 15, 2023</option>
                             <option value="2023-06-15">June 15, 2023</option>
                             <option value="2023-09-15">September 15, 2023</option>
-                            <option value="2024-01-15">January 15, 2024</option>
+                            <option value="2024-01-15">January 15, 2024</option> -->
                         </select>
                     </form>
                 </div>
@@ -103,7 +109,7 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>

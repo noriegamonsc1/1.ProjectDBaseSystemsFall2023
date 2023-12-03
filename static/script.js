@@ -1,6 +1,6 @@
 // Function to populate the due date dropdown
-function populateDueDateDropdown() {
-    var dropdown = document.getElementById('dueDate');
+function populateDueDateDropdown(dropdownId) {
+    var dropdown = document.getElementById(dropdownId);
     var years = [2023, 2024, 2025, 2026];
 
     // Clear existing options
@@ -68,10 +68,55 @@ function confirmDelete(taxId) {
     }
 }
 
+function updateDataTable() {   
+    let dateText = $('#filterDueDate option:selected').val();
+    // console.log("Changed filter dropdown! date: ", dateText);
+    $.ajax({
+        type: "GET",
+        url: "/fetchTaxRecords/" + dateText,
+        success: function(result) {
+            // console.log("Ajax is success!! data: ", result);
+            updateTable(result);
+        }
+    });
+}
+
+function updateTable(tableData) {
+    const tableBody = document.getElementById('recordsTableBody');
+    let tableContent = '';
+    tableData.forEach((row) => {
+        tableContent += `<tr>
+                            <td>${row._company}</td>
+                            <td>${row.amount}</td>
+                            <td>${formatDate(row.payment_date)}</td>
+                            <td>${row.status}</td>
+                            <td>${formatDate(row.due_date)}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" onclick="showUpdateModal('${row.tax_id}', '${row._company}', '${row.amount}', '${formatDate(row.payment_date)}', '${row.status}', '${formatDate(row.due_date)}')">Update</button>
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete('${row.tax_id}')">Delete</button>    
+                            </td>
+                        </tr>`;
+    });
+    tableBody.innerHTML = tableContent;
+}
+
+function formatDate(dateStr) {
+    if (dateStr !== null && dateStr !== undefined) {
+        return new Date(dateStr).toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
+    }
+    else {
+        return "N/A"
+    }
+}
+
+
+
 // Event listener for DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function () {
     // Call the function to populate the due date dropdown
-    populateDueDateDropdown();
+    populateDueDateDropdown('dueDate');
+    populateDueDateDropdown('filterDueDate');
+    populateDueDateDropdown('updateDueDate');
 
     // Add more event listeners if needed
 });

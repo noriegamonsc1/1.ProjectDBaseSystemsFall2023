@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, url_for
+from flask import Flask, request, redirect, render_template, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime
@@ -33,6 +33,24 @@ class Taxation(db.Model):
 def index():
     records = Taxation.query.all()
     return render_template('index.html', records=records)
+
+@app.route('/fetchTaxRecords/<dueDate>')
+def fetchTaxRecords(dueDate):
+    records = Taxation.query.filter(Taxation.due_date==dueDate)
+    
+    json_records = []
+    for record in records:
+        json_record = {
+            'tax_id': record.tax_id,
+            '_company': record._company,
+            'amount': record.amount,
+            'payment_date': record.payment_date,
+            'status': record.status,
+            'due_date':record.due_date
+        }
+        json_records.append(json_record)
+    
+    return jsonify(json_records)
 
 @app.route('/add-record', methods=['POST'])
 def add_record():
