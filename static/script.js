@@ -18,6 +18,9 @@ function populateDueDateDropdown(dropdownId) {
             dropdown.appendChild(option);
         });
     });
+
+    //default dropdown set to blank value
+    dropdown.selectedIndex = -1;
 }
 
 
