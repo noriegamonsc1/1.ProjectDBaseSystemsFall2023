@@ -57,10 +57,13 @@ function submitUpdate() {
 function confirmDelete(taxId) {
     if (confirm("Are you sure you want to delete this record?")) {
         // If the user confirms, submit the delete form
-        var deleteForm = document.getElementById(`deleteForm_${taxId}`);
-        if (deleteForm) {
-            deleteForm.submit();
-        }
+        
+        // Update action URL to DELETE with the record ID
+        var actionUrl = '/delete/' + taxId;
+        $('#updateForm').attr('action', actionUrl);
+
+        // Submit the form in the modal
+        $('#updateForm').submit();
     } else {
         // If the user cancels, do nothing
         return false;
