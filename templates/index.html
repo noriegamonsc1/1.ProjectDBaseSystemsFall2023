@@ -15,15 +15,13 @@
         <h4>Add a new record:</h4>
         <input type="text" id="company" name="company" placeholder="Company" required>
         <input type="number" id="amount" name="amount" placeholder="Amount" required>
-
-        <label for="payment_date">Payment Date:</label>
-        <input type="date" id="payment_date" name="payment_date" placeholder="Payment Date">
-
-        <label for="status">Status:</label>
+	<label for="status">Status:</label>
         <select id="status" name="status">
             <option value="paid">Paid</option>
             <option value="unpaid">Unpaid</option>
         </select>
+        <label for="payment_date">Payment Date:</label>
+        <input type="date" id="payment_date" name="payment_date" placeholder="Payment Date">
 
         <label for="due_date">Due Date:</label>
         <select id="dueDate" name="due_date" required>
@@ -51,8 +49,8 @@
                 <tr>
                     <th>Company</th>
                     <th>Amount</th>
+		    <th>Status</th>
                     <th>Payment Date</th>
-                    <th>Status</th>
                     <th>Due Date</th>
                     <th>Actions</th>
                 </tr>
@@ -62,11 +60,11 @@
                 <tr>
                     <td>{{ record.company }}</td>
                     <td name="record-amount">{{ record.amount }}</td>
+		    <td>{{ record.status }}</td>
                     <td>{{ record.payment_date.strftime('%Y-%m-%d') if record.payment_date else 'N/A' }}</td>
-                    <td>{{ record.status }}</td>
                     <td>{{ record.due_date.strftime('%Y-%m-%d') }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" onclick="showUpdateModal('{{ record.tax_id }}', '{{ record.company }}', '{{ record.amount }}', '{% if record.payment_date is not none %}{{ record.payment_date.strftime('%Y-%m-%d') }}{% endif %}', '{{ record.status }}', '{{ record.due_date.strftime('%Y-%m-%d') }}')">Update</button>
+                        <button type="button" class="btn btn-primary" onclick="showUpdateModal('{{ record.tax_id }}', '{{ record.company }}', '{{ record.amount }}','{{ record.status }}', '{% if record.payment_date is not none %}{{ record.payment_date.strftime('%Y-%m-%d') }}{% endif %}', '{{ record.due_date.strftime('%Y-%m-%d') }}')">Update</button>
                         <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ record.tax_id }}')">Delete</button>
                     </td>
                 </tr>
