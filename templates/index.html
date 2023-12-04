@@ -40,8 +40,11 @@
     <div id="recordsContainer">
         <h4>Summary:</h4>
         <label>Filter by Due Date:</label>
+	
         <select class="form-control mb-2" id="filterDueDate" name="due_date" onchange="updateDataTable();">
+		<option value="all">All</option>
         </select>
+	
 
         <table id="recordsTable">
             <thead>

@@ -36,21 +36,26 @@ def index():
 
 @app.route('/fetchTaxRecords/<dueDate>')
 def fetchTaxRecords(dueDate):
-    records = Taxation.query.filter(Taxation.due_date==dueDate)
-    
+    if dueDate == 'all':
+        records = Taxation.query.all()
+    else:
+        due_date_obj = datetime.strptime(dueDate, '%Y-%m-%d').date()
+        records = Taxation.query.filter(Taxation.due_date == due_date_obj)
+
     json_records = []
     for record in records:
         json_record = {
             'tax_id': record.tax_id,
             '_company': record._company,
             'amount': record.amount,
-            'payment_date': record.payment_date,
+            'payment_date': record.payment_date.strftime('%Y-%m-%d') if record.payment_date else None,
             'status': record.status,
-            'due_date':record.due_date
+            'due_date': record.due_date.strftime('%Y-%m-%d')
         }
         json_records.append(json_record)
-    
+
     return jsonify(json_records)
+
 
 @app.route('/add-record', methods=['POST'])
 def add_record():
