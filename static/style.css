@@ -1,5 +1,6 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
@@ -9,6 +10,7 @@ h1 {
     text-align: center;
 }
 
+/* Form Styles */
 form {
     max-width: 600px;
     margin: 20px auto;
@@ -30,12 +32,15 @@ form button {
     color: white;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 form button:hover {
     background-color: #4cae4c;
+    opacity: 0.9;
 }
 
+/* Table Styles */
 table {
     width: 90%;
     margin: 20px auto;
@@ -48,9 +53,66 @@ table, th, td {
     text-align: left;
 }
 
+table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Container Styles */
 #summaryContainer, #recordsContainer {
     background-color: #fff;
     padding: 20px;
     margin: 20px auto;
     border-radius: 8px;
+}
+
+/* Button Colors */
+.btn-primary {
+    background-color: #4a90e2;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+/* Modal Styles */
+.modal {
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsive Table for Smaller Screens */
+@media screen and (max-width: 600px) {
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* Input and Select Focus Styles */
+input:focus, select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    outline: none;
+}
+
+/* Elegant Borders for Containers */
+.container {
+    border: 2px solid #4a90e2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+/* Animated Border for Focus on Inputs */
+input:focus, select:focus, textarea:focus {
+    border: 2px solid #4a90e2;
+    outline: none;
+    box-shadow: 0 0 10px #719ECE;
 }
