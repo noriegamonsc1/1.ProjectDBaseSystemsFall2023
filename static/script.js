@@ -90,7 +90,7 @@ function updateTable(tableData) {
     tableData.forEach((row) => {
         tableContent += `<tr>
                             <td>${row._company}</td>
-                            <td>${row.amount}</td>
+                            <td name='record-amount'>${row.amount}</td>
                             <td>${formatDate(row.payment_date)}</td>
                             <td>${row.status}</td>
                             <td>${formatDate(row.due_date)}</td>
@@ -101,6 +101,8 @@ function updateTable(tableData) {
                         </tr>`;
     });
     tableBody.innerHTML = tableContent;
+
+    updateTaxTable();
 }
 
 function formatDate(dateStr) {
@@ -112,6 +114,43 @@ function formatDate(dateStr) {
     }
 }
 
+function updateTaxTable() {
+    // 1. Update total amount
+    let elements = document.getElementsByName('record-amount');
+
+    if (elements.length === 0) {
+        // Hide tax table if there are no records
+        document.getElementById("taxContainer").style.display = 'none';
+    }
+    else {
+        // Calculate total amount
+        let sum = 0;
+        for (const e of elements) {
+            sum += parseFloat(e.textContent);
+        }
+        document.getElementById("totalAmount").innerHTML = "$" + sum;
+
+        // Show tax table
+        document.getElementById("taxContainer").style.display = 'block';
+    }
+
+    calculateTaxDue();
+
+}
+
+function calculateTaxDue() {
+    let totalAmount = parseFloat(document.getElementById("totalAmount").innerHTML.replace("$",""));
+    let taxRate = parseFloat(document.getElementById("taxRate").value);
+
+    // console.log("TOTAL AMOUNT: ", totalAmount)
+    // console.log("TAX Rate: ", taxRate)
+
+    if (!isNaN(totalAmount) && !isNaN(taxRate)) {
+        let taxAmount = totalAmount * taxRate;
+        taxAmount = (Math.round(taxAmount * 100) / 100).toFixed(2); // Round to two decimals
+        document.getElementById("taxDue").innerHTML = "$" + taxAmount;
+    }
+}
 
 
 // Event listener for DOMContentLoaded
@@ -120,6 +159,8 @@ document.addEventListener('DOMContentLoaded', function () {
     populateDueDateDropdown('dueDate');
     populateDueDateDropdown('filterDueDate');
     populateDueDateDropdown('updateDueDate');
+
+    updateTaxTable();
 
     // Add more event listeners if needed
 });

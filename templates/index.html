@@ -58,7 +58,7 @@
                 {% for record in records %}
                 <tr>
                     <td>{{ record.company }}</td>
-                    <td>{{ record.amount }}</td>
+                    <td name="record-amount">{{ record.amount }}</td>
                     <td>{{ record.payment_date.strftime('%Y-%m-%d') if record.payment_date else 'N/A' }}</td>
                     <td>{{ record.status }}</td>
                     <td>{{ record.due_date.strftime('%Y-%m-%d') }}</td>
@@ -70,6 +70,23 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div id="taxContainer">
+            <table id="taxTable">
+                <tr>
+                    <td width="75%">Total Amount</td>
+                    <td id="totalAmount"></td>
+                </tr>
+                <tr>
+                    <td width="75%">Tax Rate:</td>
+                    <td><input type="number" class="form-control mb-2" id="taxRate" placeholder="0.02" oninput="calculateTaxDue()" required></td>
+                </tr>
+                <tr>
+                    <td width="75%">Tax Due:</td>
+                    <td id="taxDue"></td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <!-- Update Record Modal -->
